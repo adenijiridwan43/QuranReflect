@@ -1,20 +1,29 @@
+import './global.css';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Suspense } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SQLiteProvider } from 'expo-sqlite';
+import AppNavigator from './src/navigation/AppNavigator';
 
-export default function App() {
+function LoadingPlaceholder() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View className="flex-1 items-center justify-center bg-[#F9F7F3]">
+      <ActivityIndicator size="large" color="#134729" />
+      <Text className="mt-4 font-[Inter-Medium] text-[#134729]">Initializing Library...</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <SafeAreaProvider>
+      <StatusBar style="auto" />
+      <Suspense fallback={<LoadingPlaceholder />}>
+        <SQLiteProvider databaseName="quran.db" assetSource={{ assetId: require('./assets/quran.db') }}>
+          <AppNavigator />
+        </SQLiteProvider>
+      </Suspense>
+    </SafeAreaProvider>
+  );
+}
