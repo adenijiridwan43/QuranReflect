@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system';
-import { Audio } from 'expo-av';
+import { createAudioPlayer, setAudioModeAsync, AudioPlayer } from 'expo-audio';
 
 export interface Reciter {
   id: string;
@@ -24,7 +24,7 @@ interface AudioState {
   isPlaying: boolean;
   isDownloading: boolean;
   downloadProgress: number;
-  soundObject: Audio.Sound | null;
+  soundObject: AudioPlayer | null;
 
   // Actions
   setReciter: (reciter: Reciter) => void;
@@ -108,23 +108,25 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     }
 
     try {
-      await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-        staysActiveInBackground: true,
+      // expo-audio global configuration
+      await setAudioModeAsync({
+        playsInSilentMode: true,
+        shouldPlayInBackground: true,
+        interruptionMode: 'doNotMix',
       });
 
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: playbackUrl },
-        { shouldPlay: true },
-        (status) => {
-          if (status.isLoaded) {
-            if (status.didJustFinish) {
-              set({ isPlaying: false, playingSurahId: null });
-            }
-          }
+      // Create new player
+      const player = createAudioPlayer(playbackUrl);
+      
+      // Add status listener for completion
+      player.addListener('playbackStatusUpdate', (status) => {
+        if (status.didJustFinish) {
+          set({ isPlaying: false, playingSurahId: null });
         }
-      );
-      set({ soundObject: sound, isPlaying: true });
+      });
+
+      player.play();
+      set({ soundObject: player, isPlaying: true });
     } catch (e) {
       console.error('Error playing surah', e);
       set({ isPlaying: false, playingSurahId: null });
@@ -134,7 +136,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
   pauseSurah: async () => {
     const { soundObject } = get();
     if (soundObject) {
-      await soundObject.pauseAsync();
+      soundObject.pause();
       set({ isPlaying: false });
     }
   },
@@ -142,7 +144,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
   resumeSurah: async () => {
     const { soundObject } = get();
     if (soundObject) {
-      await soundObject.playAsync();
+      soundObject.play();
       set({ isPlaying: true });
     }
   },
@@ -150,9 +152,10 @@ export const useAudioStore = create<AudioState>((set, get) => ({
   stopSurah: async () => {
     const { soundObject } = get();
     if (soundObject) {
-      await soundObject.stopAsync();
-      await soundObject.unloadAsync();
+      soundObject.pause();
+      soundObject.remove();
       set({ soundObject: null, isPlaying: false, playingSurahId: null });
     }
   }
 }));
+
