@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Entypo, Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialCommunityIcons, FontAwesome5 } from 'expo-vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
@@ -65,19 +65,25 @@ export default function HomeScreen() {
         {/* Quick Stats Grid */}
         <View className="px-6 mb-8 flex-row justify-between">
           <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm mr-4 items-center border border-surface-container">
-            <MaterialCommunityIcons name="pen" size={24} color="#D4AF37" className="mb-2" />
+            <View style={{ marginBottom: 8 }}>
+              <MaterialCommunityIcons name="pen" size={24} color="#D4AF37" />
+            </View>
             <Text className="text-xl font-bold text-on-surface">24</Text>
             <Text className="text-xs text-gray-500 mt-1">Reflections</Text>
           </View>
 
           <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm mr-4 items-center border border-surface-container">
-            <FontAwesome5 name="fire" size={24} color="#E27D60" className="mb-2" />
+            <View style={{ marginBottom: 8 }}>
+              <FontAwesome5 name="fire" size={24} color="#E27D60" />
+            </View>
             <Text className="text-xl font-bold text-on-surface">7 days</Text>
             <Text className="text-xs text-gray-500 mt-1">Streak</Text>
           </View>
 
           <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm items-center border border-surface-container">
-            <Ionicons name="calendar" size={24} color="#4A90E2" className="mb-2" />
+            <View style={{ marginBottom: 8 }}>
+              <Ionicons name="calendar" size={24} color="#4A90E2" />
+            </View>
             <Text className="text-xl font-bold text-on-surface">5/30</Text>
             <Text className="text-xs text-gray-500 mt-1">Plan</Text>
           </View>

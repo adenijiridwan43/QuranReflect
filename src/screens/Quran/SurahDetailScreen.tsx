@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Switch, Modal, ActivityIndicator } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from 'expo-vector-icons';
 
 import { useSQLiteContext } from 'expo-sqlite';
 import { useAudioStore, AVAILABLE_RECITERS, Reciter } from '../../store/useAudioStore';
