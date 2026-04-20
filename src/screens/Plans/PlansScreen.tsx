@@ -1,96 +1,89 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from 'expo-vector-icons';
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function PlansScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-surface">
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 40 }}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.flex1} contentContainerStyle={{ paddingBottom: 40 }}>
         
         {/* Header */}
-        <View className="px-6 py-6 border-b border-surface-container bg-surface shadow-sm z-10">
-          <Text className="text-3xl font-bold font-heading text-primary-container mb-1">
-            Reading Journeys
-          </Text>
-          <Text className="text-gray-500 text-sm">
-            Curated paths to connect with the divine.
-          </Text>
+        <View style={styles.header}>
+          <Text style={styles.pageTitle}>Reading Journeys</Text>
+          <Text style={styles.subtitle}>Curated paths to connect with the divine.</Text>
         </View>
 
         {/* Active Journey Card */}
-        <View className="px-6 mt-8 mb-10">
-          <Text className="text-lg font-bold text-on-surface mb-4">Continue Journey</Text>
+        <View style={styles.activeSection}>
+          <Text style={styles.sectionTitle}>Continue Journey</Text>
           <LinearGradient
             colors={['#735c00', '#4a3b00']}
-            className="rounded-3xl p-6 shadow-xl relative overflow-hidden"
+            style={styles.journeyCard}
           >
-            <View className="absolute -right-10 -top-10 opacity-10">
+            <View style={styles.watermark}>
               <Ionicons name="moon" size={140} color="#ffffff" />
             </View>
 
-            <View className="bg-white/10 self-start px-3 py-1 rounded-full border border-white/20 mb-4 flex-row items-center">
+            <View style={styles.dayBadge}>
               <MaterialCommunityIcons name="clock-outline" size={14} color="#ffe088" />
-              <Text className="text-secondary-fixed text-xs font-semibold ml-1">Day 12 of 30</Text>
+              <Text style={styles.dayText}>Day 12 of 30</Text>
             </View>
 
-            <Text className="text-white text-2xl font-heading mb-2">Ramadan Preparation</Text>
-            <Text className="text-white/80 text-sm mb-6 leading-relaxed">
+            <Text style={styles.journeyTitle}>Ramadan Preparation</Text>
+            <Text style={styles.journeyDesc}>
               Read passages focused on Taqwa, patience, and character building ahead of the holy month.
             </Text>
 
-            <View className="h-1.5 bg-black/20 rounded-full overflow-hidden mb-4">
-              <View className="w-[40%] h-full bg-secondary-fixed rounded-full" />
+            <View style={styles.progressBar}>
+              <View style={styles.progressFill} />
             </View>
 
-            <View className="flex-row justify-between items-center">
-              <Text className="text-white/80 text-xs font-semibold">40% Completed</Text>
-              <TouchableOpacity className="bg-white px-5 py-2.5 rounded-xl shadow-sm">
-                <Text className="text-secondary font-bold text-sm">Read Today's Portions</Text>
+            <View style={styles.journeyFooter}>
+              <Text style={styles.progressLabel}>40% Completed</Text>
+              <TouchableOpacity style={styles.readBtn}>
+                <Text style={styles.readBtnText}>Read Today's Portions</Text>
               </TouchableOpacity>
             </View>
           </LinearGradient>
         </View>
 
         {/* Thematic Collections */}
-        <View className="px-6">
-          <Text className="text-lg font-bold text-on-surface mb-4">Thematic Collections</Text>
+        <View style={styles.themesSection}>
+          <Text style={styles.sectionTitle}>Thematic Collections</Text>
           
-          <View className="flex-row flex-wrap justify-between">
-            {/* Theme 1 */}
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-container">
-              <View className="w-12 h-12 rounded-full bg-[#85CDCA]/20 items-center justify-center mb-3">
+          <View style={styles.themesGrid}>
+            <TouchableOpacity style={styles.themeCard}>
+              <View style={[styles.themeIcon, { backgroundColor: 'rgba(133,205,202,0.2)' }]}>
                 <Ionicons name="water" size={24} color="#3b8784" />
               </View>
-              <Text className="font-bold text-on-surface text-lg mb-1">Patience</Text>
-              <Text className="text-gray-500 text-xs">7 Days • 14 Verses</Text>
+              <Text style={styles.themeName}>Patience</Text>
+              <Text style={styles.themeMeta}>7 Days • 14 Verses</Text>
             </TouchableOpacity>
 
-            {/* Theme 2 */}
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-container">
-              <View className="w-12 h-12 rounded-full bg-[#E27D60]/20 items-center justify-center mb-3">
+            <TouchableOpacity style={styles.themeCard}>
+              <View style={[styles.themeIcon, { backgroundColor: 'rgba(226,125,96,0.2)' }]}>
                 <MaterialCommunityIcons name="heart-pulse" size={24} color="#a84c32" />
               </View>
-              <Text className="font-bold text-on-surface text-lg mb-1">Healing</Text>
-              <Text className="text-gray-500 text-xs">10 Days • 25 Verses</Text>
+              <Text style={styles.themeName}>Healing</Text>
+              <Text style={styles.themeMeta}>10 Days • 25 Verses</Text>
             </TouchableOpacity>
 
-            {/* Theme 3 */}
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-container">
-              <View className="w-12 h-12 rounded-full bg-[#6C5CE7]/20 items-center justify-center mb-3">
+            <TouchableOpacity style={styles.themeCard}>
+              <View style={[styles.themeIcon, { backgroundColor: 'rgba(108,92,231,0.2)' }]}>
                 <Ionicons name="star" size={24} color="#4539a6" />
               </View>
-              <Text className="font-bold text-on-surface text-lg mb-1">Prophets</Text>
-              <Text className="text-gray-500 text-xs">14 Days • 40 Verses</Text>
+              <Text style={styles.themeName}>Prophets</Text>
+              <Text style={styles.themeMeta}>14 Days • 40 Verses</Text>
             </TouchableOpacity>
 
-            {/* Theme 4 */}
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-surface-container">
-              <View className="w-12 h-12 rounded-full bg-[#D4AF37]/20 items-center justify-center mb-3">
+            <TouchableOpacity style={styles.themeCard}>
+              <View style={[styles.themeIcon, { backgroundColor: 'rgba(212,175,55,0.2)' }]}>
                 <MaterialCommunityIcons name="shield-sun" size={24} color="#a48624" />
               </View>
-              <Text className="font-bold text-on-surface text-lg mb-1">Protection</Text>
-              <Text className="text-gray-500 text-xs">5 Days • 10 Verses</Text>
+              <Text style={styles.themeName}>Protection</Text>
+              <Text style={styles.themeMeta}>5 Days • 10 Verses</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -99,3 +92,65 @@ export default function PlansScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  flex1: { flex: 1 },
+
+  // Header
+  header: {
+    paddingHorizontal: 24, paddingVertical: 24,
+    borderBottomWidth: 1, borderBottomColor: '#edeeef',
+    backgroundColor: '#f8f9fa', elevation: 2,
+  },
+  pageTitle: { fontSize: 30, fontWeight: 'bold', color: '#2D5F3F', marginBottom: 4 },
+  subtitle: { color: '#9ca3af', fontSize: 14 },
+
+  // Active Journey
+  activeSection: { paddingHorizontal: 24, marginTop: 32, marginBottom: 40 },
+  sectionTitle: { fontSize: 18, fontWeight: 'bold', color: '#191c1d', marginBottom: 16 },
+  journeyCard: {
+    borderRadius: 24, padding: 24, overflow: 'hidden',
+    elevation: 8, shadowColor: '#735c00', shadowOpacity: 0.3, shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  watermark: { position: 'absolute', right: -40, top: -40, opacity: 0.1 },
+  dayBadge: {
+    alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 999,
+    marginBottom: 16, flexDirection: 'row', alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)',
+  },
+  dayText: { color: '#ffe088', fontSize: 12, fontWeight: '600', marginLeft: 4 },
+  journeyTitle: { color: '#ffffff', fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
+  journeyDesc: {
+    color: 'rgba(255,255,255,0.8)', fontSize: 14, marginBottom: 24, lineHeight: 22,
+  },
+  progressBar: {
+    height: 6, backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 999,
+    overflow: 'hidden', marginBottom: 16,
+  },
+  progressFill: { width: '40%', height: '100%', backgroundColor: '#ffe088', borderRadius: 999 },
+  journeyFooter: {
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+  },
+  progressLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 12, fontWeight: '600' },
+  readBtn: {
+    backgroundColor: '#ffffff', paddingHorizontal: 20, paddingVertical: 10,
+    borderRadius: 12, elevation: 2,
+  },
+  readBtnText: { color: '#735c00', fontWeight: 'bold', fontSize: 14 },
+
+  // Themes
+  themesSection: { paddingHorizontal: 24 },
+  themesGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  themeCard: {
+    width: '48%', backgroundColor: '#ffffff', borderRadius: 16, padding: 20, marginBottom: 12,
+    borderWidth: 1, borderColor: '#edeeef', elevation: 2,
+  },
+  themeIcon: {
+    width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center', marginBottom: 12,
+  },
+  themeName: { fontWeight: 'bold', color: '#191c1d', fontSize: 18, marginBottom: 4 },
+  themeMeta: { color: '#9ca3af', fontSize: 12 },
+});

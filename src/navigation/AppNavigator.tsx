@@ -2,7 +2,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Entypo, Ionicons, MaterialCommunityIcons } from 'expo-vector-icons';
+import Entypo from '@expo/vector-icons/Entypo';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 // Import Screens
 import HomeScreen from '../screens/Home/HomeScreen';
@@ -35,10 +37,6 @@ export default function AppNavigator() {
             backgroundColor: '#ffffff', // surface_lowest
             borderTopWidth: 0,
             elevation: 10,
-            shadowColor: '#191c1d',
-            shadowOpacity: 0.05,
-            shadowRadius: 10,
-            shadowOffset: { width: 0, height: -2 },
           },
         }}
       >

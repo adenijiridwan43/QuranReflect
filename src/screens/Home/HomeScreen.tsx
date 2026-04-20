@@ -1,152 +1,148 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Entypo, Ionicons, MaterialCommunityIcons, FontAwesome5 } from 'expo-vector-icons';
+import Entypo from '@expo/vector-icons/Entypo';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const navigation = useNavigation<any>();
+
   return (
-    <SafeAreaView className="flex-1 bg-surface">
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 40 }}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.flex1} contentContainerStyle={{ paddingBottom: 40 }}>
         
         {/* Header Section */}
-        <View className="px-6 pt-8 pb-6 flex-row justify-between items-start">
+        <View style={styles.header}>
           <View>
-            <Text className="text-primary-container text-2xl font-bold font-heading">
-              As-Salamu Alaykum
-            </Text>
-            <Text className="text-gray-500 text-sm mt-1">
-              Jumada al-Akhirah 1447 • Friday
-            </Text>
+            <Text style={styles.greeting}>As-Salamu Alaykum</Text>
+            <Text style={styles.dateText}>Jumada al-Akhirah 1447 • Friday</Text>
           </View>
-          <View className="bg-secondary-container/20 px-3 py-1.5 rounded-full border border-secondary/20">
-            <Text className="text-secondary text-xs font-semibold">
-              Asr in 2h 15m
-            </Text>
+          <View style={styles.prayerBadge}>
+            <Text style={styles.prayerText}>Asr in 2h 15m</Text>
           </View>
         </View>
 
-        {/* Today's Focus Card with Gradient & Shadow */}
-        <View className="px-6 mb-8">
+        {/* Today's Focus Card */}
+        <View style={styles.sectionPadding}>
           <LinearGradient
             colors={['#2D5F3F', '#134729']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            className="rounded-3xl p-6 shadow-xl shadow-primary-container relative overflow-hidden"
+            style={styles.focusCard}
           >
-            {/* Soft Geometry Watermark (Mocked with opacity) */}
-            <View className="absolute -right-10 -top-10 opacity-10">
+            <View style={styles.watermark}>
               <MaterialCommunityIcons name="star-four-points-outline" size={120} color="#ffffff" />
             </View>
 
-            <View className="flex-row items-center mb-4">
+            <View style={styles.row}>
               <MaterialCommunityIcons name="book-open-page-variant" size={20} color="#b8efc6" />
-              <Text className="text-primary-fixed ml-2 font-semibold tracking-wide uppercase text-xs">
-                Today's Reading
-              </Text>
+              <Text style={styles.focusLabel}>TODAY'S READING</Text>
             </View>
 
-            <Text className="text-white text-2xl font-heading mb-1 shadow-sm">
-              Surah Al-Baqarah
-            </Text>
-            <Text className="text-white/80 text-sm mb-6">Verse 255 (Ayatul Kursi)</Text>
+            <Text style={styles.focusTitle}>Surah Al-Baqarah</Text>
+            <Text style={styles.focusSubtitle}>Verse 255 (Ayatul Kursi)</Text>
 
-            {/* Progress Bar */}
-            <View className="h-1.5 bg-black/20 rounded-full overflow-hidden mb-4">
-              <View className="w-1/3 h-full bg-secondary-fixed rounded-full" />
+            <View style={styles.progressBar}>
+              <View style={styles.progressFill} />
             </View>
 
-            <TouchableOpacity className="bg-white/10 active:bg-white/20 py-3 rounded-xl border border-white/20 flex-row justify-center items-center">
-              <Text className="text-white font-semibold">Continue Reading</Text>
+            <TouchableOpacity 
+              style={styles.continueBtn} 
+              activeOpacity={0.7}
+              onPress={() => navigation.navigate('QuranTab', { screen: 'SurahDetail', params: { surahId: 2, surahName: 'Al-Baqarah' }})}
+            >
+              <Text style={styles.continueBtnText}>Continue Reading</Text>
             </TouchableOpacity>
           </LinearGradient>
         </View>
 
         {/* Quick Stats Grid */}
-        <View className="px-6 mb-8 flex-row justify-between">
-          <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm mr-4 items-center border border-surface-container">
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
             <View style={{ marginBottom: 8 }}>
               <MaterialCommunityIcons name="pen" size={24} color="#D4AF37" />
             </View>
-            <Text className="text-xl font-bold text-on-surface">24</Text>
-            <Text className="text-xs text-gray-500 mt-1">Reflections</Text>
+            <Text style={styles.statNumber}>24</Text>
+            <Text style={styles.statLabel}>Reflections</Text>
           </View>
 
-          <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm mr-4 items-center border border-surface-container">
+          <View style={[styles.statCard, { marginHorizontal: 12 }]}>
             <View style={{ marginBottom: 8 }}>
               <FontAwesome5 name="fire" size={24} color="#E27D60" />
             </View>
-            <Text className="text-xl font-bold text-on-surface">7 days</Text>
-            <Text className="text-xs text-gray-500 mt-1">Streak</Text>
+            <Text style={styles.statNumber}>7 days</Text>
+            <Text style={styles.statLabel}>Streak</Text>
           </View>
 
-          <View className="flex-1 bg-surface-lowest rounded-2xl p-4 shadow-sm items-center border border-surface-container">
+          <View style={styles.statCard}>
             <View style={{ marginBottom: 8 }}>
               <Ionicons name="calendar" size={24} color="#4A90E2" />
             </View>
-            <Text className="text-xl font-bold text-on-surface">5/30</Text>
-            <Text className="text-xs text-gray-500 mt-1">Plan</Text>
+            <Text style={styles.statNumber}>5/30</Text>
+            <Text style={styles.statLabel}>Plan</Text>
           </View>
         </View>
 
         {/* Quick Actions */}
-        <View className="px-6 mb-8">
-          <Text className="text-lg font-bold text-on-surface mb-4">Quick Actions</Text>
-          <View className="flex-row flex-wrap justify-between">
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-sm border border-surface-container flex-row items-center">
-              <View className="w-10 h-10 rounded-full bg-primary/10 items-center justify-center mr-3">
+        <View style={styles.sectionPadding}>
+          <Text style={styles.sectionTitle}>Quick Actions</Text>
+          <View style={styles.actionsGrid}>
+            <TouchableOpacity style={styles.actionCard} onPress={() => navigation.navigate('QuranTab')}>
+              <View style={[styles.actionIcon, { backgroundColor: 'rgba(19,71,41,0.1)' }]}>
                 <Ionicons name="book" size={20} color="#134729" />
               </View>
-              <Text className="font-semibold text-on-surface flex-1">Browse Quran</Text>
+              <Text style={styles.actionText}>Browse Quran</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 mb-4 shadow-sm border border-surface-container flex-row items-center">
-              <View className="w-10 h-10 rounded-full bg-secondary/10 items-center justify-center mr-3">
+            <TouchableOpacity style={styles.actionCard} onPress={() => navigation.navigate('Journal')}>
+              <View style={[styles.actionIcon, { backgroundColor: 'rgba(115,92,0,0.1)' }]}>
                 <MaterialCommunityIcons name="book-edit" size={20} color="#735c00" />
               </View>
-              <Text className="font-semibold text-on-surface flex-1">My Journal</Text>
+              <Text style={styles.actionText}>My Journal</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 shadow-sm border border-surface-container flex-row items-center">
-              <View className="w-10 h-10 rounded-full bg-blue-500/10 items-center justify-center mr-3">
+            <TouchableOpacity style={styles.actionCard} onPress={() => navigation.navigate('Plans')}>
+              <View style={[styles.actionIcon, { backgroundColor: 'rgba(74,144,226,0.1)' }]}>
                 <Ionicons name="map" size={20} color="#4A90E2" />
               </View>
-              <Text className="font-semibold text-on-surface flex-1">Reading Plans</Text>
+              <Text style={styles.actionText}>Reading Plans</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity className="w-[48%] bg-surface-lowest rounded-2xl p-5 shadow-sm border border-surface-container flex-row items-center">
-              <View className="w-10 h-10 rounded-full bg-purple-500/10 items-center justify-center mr-3">
+            <TouchableOpacity style={styles.actionCard} onPress={() => navigation.navigate('Journal')}>
+              <View style={[styles.actionIcon, { backgroundColor: 'rgba(108,92,231,0.1)' }]}>
                 <Ionicons name="bookmark" size={20} color="#6C5CE7" />
               </View>
-              <Text className="font-semibold text-on-surface flex-1">Bookmarks</Text>
+              <Text style={styles.actionText}>Bookmarks</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Recent Activity Timeline */}
-        <View className="px-6">
-          <Text className="text-lg font-bold text-on-surface mb-4">Recent Activity</Text>
-          <View className="bg-surface-lowest rounded-2xl shadow-sm border border-surface-container overflow-hidden">
+        <View style={styles.sectionPadding}>
+          <Text style={styles.sectionTitle}>Recent Activity</Text>
+          <View style={styles.timelineContainer}>
             
-            {/* Timeline Item 1 */}
-            <View className="flex-row p-4 border-l-4 border-l-[#85CDCA] border-b border-b-surface-container">
-              <View className="flex-1">
-                <Text className="text-on-surface font-semibold mb-1">Reflection on Al-Ikhlas</Text>
-                <Text className="text-gray-500 text-xs">2 hours ago</Text>
+            <View style={[styles.timelineItem, { borderLeftColor: '#85CDCA', borderBottomWidth: 1, borderBottomColor: '#edeeef' }]}>
+              <View style={styles.flex1}>
+                <Text style={styles.timelineTitle}>Reflection on Al-Ikhlas</Text>
+                <Text style={styles.timelineDate}>2 hours ago</Text>
               </View>
-              <View className="bg-[#85CDCA]/20 px-3 py-1 rounded-full justify-center">
-                <Text className="text-[#3b8784] text-xs font-semibold">Peace</Text>
+              <View style={[styles.emotionBadge, { backgroundColor: 'rgba(133,205,202,0.2)' }]}>
+                <Text style={[styles.emotionText, { color: '#3b8784' }]}>Peace</Text>
               </View>
             </View>
 
-            {/* Timeline Item 2 */}
-            <View className="flex-row p-4 border-l-4 border-l-[#E27D60]">
-              <View className="flex-1">
-                <Text className="text-on-surface font-semibold mb-1">Completed Theme: Prophets</Text>
-                <Text className="text-gray-500 text-xs">Yesterday</Text>
+            <View style={[styles.timelineItem, { borderLeftColor: '#E27D60' }]}>
+              <View style={styles.flex1}>
+                <Text style={styles.timelineTitle}>Completed Theme: Prophets</Text>
+                <Text style={styles.timelineDate}>Yesterday</Text>
               </View>
-              <View className="bg-[#E27D60]/20 px-3 py-1 rounded-full justify-center">
-                <Text className="text-[#a84c32] text-xs font-semibold">Grateful</Text>
+              <View style={[styles.emotionBadge, { backgroundColor: 'rgba(226,125,96,0.2)' }]}>
+                <Text style={[styles.emotionText, { color: '#a84c32' }]}>Grateful</Text>
               </View>
             </View>
             
@@ -157,3 +153,76 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  flex1: { flex: 1 },
+  row: { flexDirection: 'row', alignItems: 'center', marginBottom: 16 },
+
+  // Header
+  header: {
+    paddingHorizontal: 24, paddingTop: 32, paddingBottom: 24,
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start',
+  },
+  greeting: { color: '#2D5F3F', fontSize: 24, fontWeight: 'bold' },
+  dateText: { color: '#9ca3af', fontSize: 14, marginTop: 4 },
+  prayerBadge: {
+    backgroundColor: 'rgba(254,214,91,0.2)', paddingHorizontal: 12, paddingVertical: 6,
+    borderRadius: 999, borderWidth: 1, borderColor: 'rgba(115,92,0,0.2)',
+  },
+  prayerText: { color: '#735c00', fontSize: 12, fontWeight: '600' },
+
+  // Focus Card
+  sectionPadding: { paddingHorizontal: 24, marginBottom: 32 },
+  focusCard: {
+    borderRadius: 24, padding: 24, overflow: 'hidden',
+    elevation: 8, shadowColor: '#2D5F3F', shadowOpacity: 0.3, shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  watermark: { position: 'absolute', right: -40, top: -40, opacity: 0.1 },
+  focusLabel: { color: '#b8efc6', marginLeft: 8, fontWeight: '600', letterSpacing: 1.5, fontSize: 12 },
+  focusTitle: { color: '#ffffff', fontSize: 24, fontWeight: 'bold', marginBottom: 4 },
+  focusSubtitle: { color: 'rgba(255,255,255,0.8)', fontSize: 14, marginBottom: 24 },
+  progressBar: { height: 6, backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 999, overflow: 'hidden', marginBottom: 16 },
+  progressFill: { width: '33%', height: '100%', backgroundColor: '#ffe088', borderRadius: 999 },
+  continueBtn: {
+    backgroundColor: 'rgba(255,255,255,0.1)', paddingVertical: 12, borderRadius: 12,
+    flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+    borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)',
+  },
+  continueBtnText: { color: '#ffffff', fontWeight: '600' },
+
+  // Stats
+  statsRow: { paddingHorizontal: 24, marginBottom: 32, flexDirection: 'row', justifyContent: 'space-between' },
+  statCard: {
+    flex: 1, backgroundColor: '#ffffff', borderRadius: 16, padding: 16, alignItems: 'center',
+    borderWidth: 1, borderColor: '#edeeef', elevation: 1,
+  },
+  statNumber: { fontSize: 20, fontWeight: 'bold', color: '#191c1d' },
+  statLabel: { fontSize: 12, color: '#9ca3af', marginTop: 4 },
+
+  // Actions
+  sectionTitle: { fontSize: 18, fontWeight: 'bold', color: '#191c1d', marginBottom: 16 },
+  actionsGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+  actionCard: {
+    width: '48%', backgroundColor: '#ffffff', borderRadius: 16, padding: 20, marginBottom: 12,
+    flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#edeeef', elevation: 1,
+  },
+  actionIcon: {
+    width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 12,
+  },
+  actionText: { fontWeight: '600', color: '#191c1d', flex: 1 },
+
+  // Timeline
+  timelineContainer: {
+    backgroundColor: '#ffffff', borderRadius: 16, borderWidth: 1, borderColor: '#edeeef',
+    overflow: 'hidden', elevation: 1,
+  },
+  timelineItem: {
+    flexDirection: 'row', padding: 16, borderLeftWidth: 4,
+  },
+  timelineTitle: { color: '#191c1d', fontWeight: '600', marginBottom: 4 },
+  timelineDate: { color: '#9ca3af', fontSize: 12 },
+  emotionBadge: { paddingHorizontal: 12, paddingVertical: 4, borderRadius: 999, justifyContent: 'center' },
+  emotionText: { fontSize: 12, fontWeight: '600' },
+});
